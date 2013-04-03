@@ -14,72 +14,70 @@ namespace spec\Sylius\Bundle\ShippingBundle\Checker;
 use PHPSpec2\ObjectBehavior;
 
 /**
- * Item count rule checker spec.
- *
  * @author Saša Stamenković <umpirsky@gmail.com>
  */
 class ItemCountRuleChecker extends ObjectBehavior
 {
-    function it_should_be_initializable()
+    function it_is_initializable()
     {
         $this->shouldHaveType('Sylius\Bundle\ShippingBundle\Checker\ItemCountRuleChecker');
     }
 
-    function it_should_be_Sylius_rule_checker()
+    function it_is_Sylius_rule_checker()
     {
         $this->shouldImplement('Sylius\Bundle\ShippingBundle\Checker\RuleCheckerInterface');
     }
 
     /**
-     * @param Sylius\Bundle\ShippingBundle\Model\ShippablesAwareInterface $shippablesAware
+     * @param Sylius\Bundle\ShippingBundle\Model\ShippingSubjectInterface $subject
      * @param Countable                                                   $countable
      */
-    function it_should_recognize_empty_subject_as_not_eligible($shippablesAware, $countable)
+    function it_should_recognize_empty_subject_as_not_eligible($subject, $countable)
     {
         $countable->count()->shouldBeCalled()->willReturn(0);
-        $shippablesAware->getShippables()->shouldBeCalled()->willReturn($countable);
+        $subject->getShippables()->shouldBeCalled()->willReturn($countable);
 
-        $this->isEligible($shippablesAware, array('count' => 10, 'equal' => false))->shouldReturn(false);
+        $this->isEligible($subject, array('count' => 10, 'equal' => false))->shouldReturn(false);
     }
 
     /**
-     * @param Sylius\Bundle\ShippingBundle\Model\ShippablesAwareInterface $shippablesAware
+     * @param Sylius\Bundle\ShippingBundle\Model\ShippingSubjectInterface $subject
      * @param Countable                                                   $countable
      */
-    function it_should_recognize_subject_as_not_eligible_if_item_count_is_less_then_configured($shippablesAware, $countable)
+    function it_should_recognize_subject_as_not_eligible_if_item_count_is_less_then_configured($subject, $countable)
     {
         $countable->count()->shouldBeCalled()->willReturn(7);
-        $shippablesAware->getShippables()->shouldBeCalled()->willReturn($countable);
+        $subject->getShippables()->shouldBeCalled()->willReturn($countable);
 
-        $this->isEligible($shippablesAware, array('count' => 10, 'equal' => false))->shouldReturn(false);
+        $this->isEligible($subject, array('count' => 10, 'equal' => false))->shouldReturn(false);
     }
 
     /**
-     * @param Sylius\Bundle\ShippingBundle\Model\ShippablesAwareInterface $shippablesAware
+     * @param Sylius\Bundle\ShippingBundle\Model\ShippingSubjectInterface $subject
      * @param Countable                                                   $countable
      */
-    function it_should_recognize_subject_as_eligible_if_item_count_is_greater_then_configured($shippablesAware, $countable)
+    function it_should_recognize_subject_as_eligible_if_item_count_is_greater_then_configured($subject, $countable)
     {
         $countable->count()->shouldBeCalled()->willReturn(12);
-        $shippablesAware->getShippables()->shouldBeCalled()->willReturn($countable);
+        $subject->getShippables()->shouldBeCalled()->willReturn($countable);
 
-        $this->isEligible($shippablesAware, array('count' => 10, 'equal' => false))->shouldReturn(true);
+        $this->isEligible($subject, array('count' => 10, 'equal' => false))->shouldReturn(true);
     }
 
     /**
-     * @param Sylius\Bundle\ShippingBundle\Model\ShippablesAwareInterface $shippablesAware
+     * @param Sylius\Bundle\ShippingBundle\Model\ShippingSubjectInterface $subject
      * @param Countable                                                   $countable
      */
-    function it_should_recognize_subject_as_eligible_if_item_count_is_equal_with_configured_depending_on_equal_setting($shippablesAware, $countable)
+    function it_should_recognize_subject_as_eligible_if_item_count_is_equal_with_configured_depending_on_equal_setting($subject, $countable)
     {
         $countable->count()->shouldBeCalled()->willReturn(10);
-        $shippablesAware->getShippables()->shouldBeCalled()->willReturn($countable);
+        $subject->getShippables()->shouldBeCalled()->willReturn($countable);
 
-        $this->isEligible($shippablesAware, array('count' => 10, 'equal' => false))->shouldReturn(false);
-        $this->isEligible($shippablesAware, array('count' => 10, 'equal' => true))->shouldReturn(true);
+        $this->isEligible($subject, array('count' => 10, 'equal' => false))->shouldReturn(false);
+        $this->isEligible($subject, array('count' => 10, 'equal' => true))->shouldReturn(true);
     }
 
-    function it_should_return_item_count_configuration_form_type()
+    function it_returns_item_count_configuration_form_type()
     {
         $this->getConfigurationFormType()->shouldReturn('sylius_shipping_rule_item_count_configuration');
     }

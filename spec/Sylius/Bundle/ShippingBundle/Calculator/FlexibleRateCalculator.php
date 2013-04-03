@@ -20,7 +20,7 @@ use PHPSpec2\ObjectBehavior;
  */
 class FlexibleRateCalculator extends ObjectBehavior
 {
-    function it_should_be_initializable()
+    function it_is_initializable()
     {
         $this->shouldHaveType('Sylius\Bundle\ShippingBundle\Calculator\FlexibleRateCalculator');
     }
@@ -30,7 +30,7 @@ class FlexibleRateCalculator extends ObjectBehavior
         $this->shouldImplement('Sylius\Bundle\ShippingBundle\Calculator\CalculatorInterface');
     }
 
-    function it_should_be_configurable()
+    function it_is_configurable()
     {
         $this->shouldBeConfigurable();
     }
@@ -38,7 +38,7 @@ class FlexibleRateCalculator extends ObjectBehavior
     /**
      * @param Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
      */
-    function it_should_have_required_first_and_additional_items_cost_with_limit_configuration_options($resolver)
+    function it_has_required_first_and_additional_items_cost_with_limit_configuration_options($resolver)
     {
         $resolver->setDefaults(array('additional_item_limit' => 0))->shouldBeCalled()->willReturn($resolver);
         $resolver->setRequired(array('first_item_cost', 'additional_item_cost'))->shouldBeCalled()->willReturn($resolver);
@@ -55,7 +55,7 @@ class FlexibleRateCalculator extends ObjectBehavior
         $this->setConfiguration($resolver);
     }
 
-    function it_should_return_flexible_rate_configuration_form_type()
+    function it_returns_flexible_rate_configuration_form_type()
     {
         $this->getConfigurationFormType()->shouldReturn('sylius_shipping_calculator_flexible_rate_configuration');
     }

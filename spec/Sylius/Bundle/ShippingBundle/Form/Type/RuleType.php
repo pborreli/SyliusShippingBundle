@@ -28,12 +28,12 @@ class RuleType extends ObjectBehavior
         $this->beConstructedWith('Rule', $checkerRegistry);
     }
 
-    function it_should_be_initializable()
+    function it_is_initializable()
     {
         $this->shouldHaveType('Sylius\Bundle\ShippingBundle\Form\Type\RuleType');
     }
 
-    function it_should_be_a_form_type()
+    function it_is_a_form_type()
     {
         $this->shouldHaveType('Symfony\Component\Form\AbstractType');
     }

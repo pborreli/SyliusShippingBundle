@@ -15,20 +15,18 @@ use Sylius\Bundle\ShippingBundle\Model\ShippingSubjectInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Calculator which charges a flat rate per shipment.
+ * Per weight amount rate calculator.
  *
  * @author Paweł Jędrzejewski <pjedrzejewski@diweb.pl>
  */
-class FlatRateCalculator extends Calculator
+class WeightRateCalculator extends Calculator
 {
     /**
-     * Calculates flat rate per item on the shipment.
-     *
      * {@inheritdoc}
      */
     public function calculate(ShippingSubjectInterface $subject, array $configuration)
     {
-        return $configuration['amount'];
+        return $configuration['amount'] * ($subject->getShippingWeight() / $configuration['division']);
     }
 
     /**
@@ -44,7 +42,7 @@ class FlatRateCalculator extends Calculator
      */
     public function getConfigurationFormType()
     {
-        return 'sylius_shipping_calculator_flat_rate_configuration';
+        return 'sylius_shipping_calculator_per_weight_rate_configuration';
     }
 
     /**
@@ -53,11 +51,16 @@ class FlatRateCalculator extends Calculator
     public function setConfiguration(OptionsResolverInterface $resolver)
     {
         $resolver
+            ->setDefaults(array(
+                'division' => 1
+            ))
             ->setRequired(array(
-                'amount'
+                'amount',
+                'division'
             ))
             ->setAllowedTypes(array(
-                'amount' => array('numeric')
+                'amount'   => array('numeric'),
+                'division' => array('numeric')
             ))
         ;
     }

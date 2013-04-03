@@ -21,12 +21,12 @@ use Sylius\Bundle\ShippingBundle\Model\RuleInterface;
  */
 class RuleCheckerRegistry extends ObjectBehavior
 {
-    function it_should_be_initializable()
+    function it_is_initializable()
     {
         $this->shouldHaveType('Sylius\Bundle\ShippingBundle\Checker\Registry\RuleCheckerRegistry');
     }
 
-    function it_should_be_Sylius_rule_checker_registry()
+    function it_is_Sylius_rule_checker_registry()
     {
         $this->shouldImplement('Sylius\Bundle\ShippingBundle\Checker\Registry\RuleCheckerRegistryInterface');
     }

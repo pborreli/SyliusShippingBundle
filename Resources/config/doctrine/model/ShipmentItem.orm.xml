@@ -14,9 +14,11 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
                   xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
 
-    <mapped-superclass name="Sylius\Bundle\ShippingBundle\Entity\ShippingCategory" table="sylius_shipping_category">
-        <field name="name" column="name" type="string" />
-        <field name="description" column="description" type="text" nullable="true" />
+    <mapped-superclass name="Sylius\Bundle\ShippingBundle\Model\ShipmentItem" table="sylius_shipment_item">
+        <field name="shippingState" column="shipping_state" type="string" nullable="false" />
+        <many-to-one field="shipment" target-entity="Sylius\Bundle\ShippingBundle\Model\ShipmentInterface">
+            <join-column name="shipment_id" referenced-column-name="id" nullable="false" />
+        </many-to-one>
         <field name="createdAt" column="created_at" type="datetime">
             <gedmo:timestampable on="create"/>
         </field>

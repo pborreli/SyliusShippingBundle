@@ -28,7 +28,7 @@ class DelegatingCalculator extends ObjectBehavior
         $this->beConstructedWith($registry);
     }
 
-    function it_should_be_initializable()
+    function it_is_initializable()
     {
         $this->shouldHaveType('Sylius\Bundle\ShippingBundle\Calculator\DelegatingCalculator');
     }

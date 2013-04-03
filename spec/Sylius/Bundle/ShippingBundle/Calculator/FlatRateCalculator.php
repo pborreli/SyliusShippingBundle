@@ -20,7 +20,7 @@ use PHPSpec2\ObjectBehavior;
  */
 class FlatRateCalculator extends ObjectBehavior
 {
-    function it_should_be_initializable()
+    function it_is_initializable()
     {
         $this->shouldHaveType('Sylius\Bundle\ShippingBundle\Calculator\FlatRateCalculator');
     }
@@ -30,7 +30,7 @@ class FlatRateCalculator extends ObjectBehavior
         $this->shouldImplement('Sylius\Bundle\ShippingBundle\Calculator\CalculatorInterface');
     }
 
-    function it_should_be_configurable()
+    function it_is_configurable()
     {
         $this->shouldBeConfigurable();
     }
@@ -38,7 +38,7 @@ class FlatRateCalculator extends ObjectBehavior
     /**
      * @param Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
      */
-    function it_should_have_required_amount_configuration_options($resolver)
+    function it_has_required_amount_configuration_options($resolver)
     {
         $resolver->setRequired(array('amount'))->shouldBeCalled()->willReturn($resolver);
         $resolver->setAllowedTypes(array('amount' => array('numeric')))->shouldBeCalled()->willReturn($resolver);
@@ -46,7 +46,7 @@ class FlatRateCalculator extends ObjectBehavior
         $this->setConfiguration($resolver);
     }
 
-    function it_should_return_flat_rate_configuration_form_type()
+    function it_returns_flat_rate_configuration_form_type()
     {
         $this->getConfigurationFormType()->shouldReturn('sylius_shipping_calculator_flat_rate_configuration');
     }

@@ -12,44 +12,40 @@
 namespace Sylius\Bundle\ShippingBundle\Model;
 
 /**
- * Shippable interface.
+ * Shipping subject.
+ *
+ * This interface can be implemented by any object, which needs to be
+ * evaluated by default shipping calculators and rule checkers.
  *
  * @author Paweł Jędrzejewski <pjedrzejewski@diweb.pl>
  */
-interface ShippableInterface
+interface ShippingSubjectInterface
 {
     /**
-     * Get the weight of an item.
+     * Get the total weight of shipped goods.
      *
      * @return integer
      */
     public function getShippingWeight();
 
     /**
-     * Get the width of an item.
+     * Get the total amount of shipped goods.
      *
      * @return integer
      */
-    public function getShippingWidth();
+    public function getShippingItemCount();
 
     /**
-     * Get the height of an item.
+     * Get the total value of shipped goods.
      *
      * @return integer
      */
-    public function getShippingHeight();
+    public function getShippingItemTotal();
 
     /**
-     * Get the depth of an item.
+     * Get collection of unique shippables.
      *
-     * @return integer
+     * @return Collection
      */
-    public function getShippingDepth();
-
-    /**
-     * Get the shipping category for transportable object.
-     *
-     * @return ShippingCategoryInterface
-     */
-    public function getShippingCategory();
+    public function getShippables();
 }

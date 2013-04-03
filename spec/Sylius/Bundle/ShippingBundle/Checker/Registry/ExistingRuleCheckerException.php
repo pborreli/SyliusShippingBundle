@@ -26,17 +26,12 @@ class ExistingRuleCheckerException extends ObjectBehavior
         $this->beConstructedWith(RuleInterface::TYPE_ITEM_TOTAL);
     }
 
-    function it_should_be_initializable()
+    function it_is_initializable()
     {
         $this->shouldHaveType('Sylius\Bundle\ShippingBundle\Checker\Registry\ExistingRuleCheckerException');
     }
 
-    function it_should_be_an_exception()
-    {
-        $this->shouldHaveType('Exception');
-    }
-
-    function it_should_be_a_invalid_argument_exception()
+    function it_extends_invalid_argument_exception()
     {
         $this->shouldHaveType('InvalidArgumentException');
     }

@@ -31,12 +31,12 @@ class RuleChoiceType extends ObjectBehavior
         $this->beConstructedWith($this->choices);
     }
 
-    function it_should_be_initializable()
+    function it_is_initializable()
     {
         $this->shouldHaveType('Sylius\Bundle\ShippingBundle\Form\Type\RuleChoiceType');
     }
 
-    function it_should_be_a_form_type()
+    function it_is_a_form_type()
     {
         $this->shouldHaveType('Symfony\Component\Form\AbstractType');
     }

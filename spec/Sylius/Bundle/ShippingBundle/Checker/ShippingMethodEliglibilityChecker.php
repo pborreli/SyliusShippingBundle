@@ -15,8 +15,6 @@ use PHPSpec2\ObjectBehavior;
 use Sylius\Bundle\ShippingBundle\Model\RuleInterface;
 
 /**
- * Shipping method checker spec.
- *
  * @author Saša Stamenković <umpirsky@gmail.com>
  */
 class ShippingMethodEliglibilityChecker extends ObjectBehavior
@@ -30,51 +28,53 @@ class ShippingMethodEliglibilityChecker extends ObjectBehavior
         $this->beConstructedWith($registry);
     }
 
-    function it_should_be_initializable()
+    function it_is_initializable()
     {
         $this->shouldHaveType('Sylius\Bundle\ShippingBundle\Checker\ShippingMethodEliglibilityChecker');
     }
 
-    function it_should_be_Sylius_rule_checker()
+    function it_implements_Sylius_shipping_method_eliglibility_checker_interface()
     {
         $this->shouldImplement('Sylius\Bundle\ShippingBundle\Checker\ShippingMethodEliglibilityCheckerInterface');
     }
 
     /**
-     * @param Sylius\Bundle\ShippingBundle\Model\ShippablesAwareInterface $shippablesAware
-     * @param Sylius\Bundle\ShippingBundle\Model\ShippingMethodInterface  $shippingMethod
-     * @param Sylius\Bundle\ShippingBundle\Model\RuleInterface            $rule
+     * @param Sylius\Bundle\ShippingBundle\Model\ShippingSubjecteInterface $subject
+     * @param Sylius\Bundle\ShippingBundle\Model\ShippingMethodInterface   $shippingMethod
+     * @param Sylius\Bundle\ShippingBundle\Model\RuleInterface             $rule
      */
-    function it_should_recognize_subject_as_eligible_if_all_checkers_recognize_it_as_eligible($registry, $checker, $shippablesAware, $shippingMethod, $rule)
+    function it_returns_true_if_all_checkers_approve_shipping_method($registry, $checker, $subject, $shippingMethod, $rule)
     {
         $configuration = array();
 
-        $registry->getChecker(RuleInterface::TYPE_ITEM_TOTAL)->shouldBeCalled()->willReturn($checker);
-        $shippingMethod->getRules()->shouldBeCalled()->willReturn(array($rule));
         $rule->getType()->shouldBeCalled()->willReturn(RuleInterface::TYPE_ITEM_TOTAL);
         $rule->getConfiguration()->shouldBeCalled()->willReturn($configuration);
 
-        $checker->isEligible($shippablesAware, $configuration)->shouldBeCalled()->willReturn(true);
+        $shippingMethod->getRules()->shouldBeCalled()->willReturn(array($rule));
+        $registry->getChecker(RuleInterface::TYPE_ITEM_TOTAL)->shouldBeCalled()->willReturn($checker);
 
-        $this->isEligible($shippablesAware, $shippingMethod)->shouldReturn(true);
+        $checker->isEligible($subject, $configuration)->shouldBeCalled()->willReturn(true);
+
+        $this->isEligible($subject, $shippingMethod)->shouldReturn(true);
     }
 
     /**
-     * @param Sylius\Bundle\ShippingBundle\Model\ShippablesAwareInterface $shippablesAware
+     * @param Sylius\Bundle\ShippingBundle\Model\ShippingSubjectInterface $subject
      * @param Sylius\Bundle\ShippingBundle\Model\ShippingMethodInterface  $shippingMethod
      * @param Sylius\Bundle\ShippingBundle\Model\RuleInterface            $rule
      */
-    function it_should_recognize_subject_as_not_eligible_if_any_checker_recognize_it_as_not_eligible($registry, $checker, $shippablesAware, $shippingMethod, $rule)
+    function it_returns_false_if_any_checker_disapproves_shipping_method($registry, $checker, $subject, $shippingMethod, $rule)
     {
         $configuration = array();
 
-        $registry->getChecker(RuleInterface::TYPE_ITEM_TOTAL)->shouldBeCalled()->willReturn($checker);
-        $shippingMethod->getRules()->shouldBeCalled()->willReturn(array($rule));
         $rule->getType()->shouldBeCalled()->willReturn(RuleInterface::TYPE_ITEM_TOTAL);
         $rule->getConfiguration()->shouldBeCalled()->willReturn($configuration);
 
-        $checker->isEligible($shippablesAware, $configuration)->shouldBeCalled()->willReturn(false);
+        $shippingMethod->getRules()->shouldBeCalled()->willReturn(array($rule));
+        $registry->getChecker(RuleInterface::TYPE_ITEM_TOTAL)->shouldBeCalled()->willReturn($checker);
 
-        $this->isEligible($shippablesAware, $shippingMethod)->shouldReturn(false);
+        $checker->isEligible($subject, $configuration)->shouldBeCalled()->willReturn(false);
+
+        $this->isEligible($subject, $shippingMethod)->shouldReturn(false);
     }
 }
